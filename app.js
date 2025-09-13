@@ -16,6 +16,7 @@ const slotBookingRoutes = require("./routers/slotBookingRoutes");
 const packageRoutes = require("./routers/packageRoutes");
 const businessHoursRoutes = require("./routers/businessHoursRoutes");
 const updatesRoutes = require("./routers/updatesRoutes");
+const mailRoutes = require("./routers/mailRoutes");
 
 // test-GET route
 app.get('/', (req, res) => {
@@ -27,6 +28,7 @@ app.use("/api/v1/slotbooking", slotBookingRoutes);
 app.use("/api/v1/package", packageRoutes);
 app.use("/api/v1/businessHours", businessHoursRoutes);
 app.use("/api/v1/updates", updatesRoutes);
+app.use("/api/v1/mail", mailRoutes);
 
 
 // Connect to database and start server
