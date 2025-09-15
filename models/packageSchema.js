@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const PackageSchema = new mongoose.Schema(
   {
-    pageName: { type: String, maxlength: 100 },
+    packageName: { type: String, maxlength: 100 },
     img_url: { type: String },
     Title: { type: String, maxlength: 150 },
     subtitle: { type: String, maxlength: 250 },

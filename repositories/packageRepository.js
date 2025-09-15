@@ -4,7 +4,7 @@ const packageRepository = {
   createPackage: async (data) => {
     try {
       const {
-        pageName,
+        packageName,
         img_url,
         Title,
         subtitle,
@@ -16,14 +16,14 @@ const packageRepository = {
 
       const query = `
         INSERT INTO packages (
-          pageName, img_url, Title,
+          packageName, img_url, Title,
           subtitle, description, Cost, no_of_person
         )
         VALUES ($1, $2, $3, $4, $5, $6, $7)
         RETURNING *`;
 
       const values = [
-        pageName,
+        packageName,
         img_url,
         Title,
         subtitle,
