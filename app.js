@@ -1,11 +1,10 @@
 const express = require("express");
-const connectDB  = require("./db/connect");
+const connectDB = require("./db/connect");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
 const cors = require("cors");
 require("dotenv").config();
-
 
 // Middleware
 app.use(express.json());
@@ -19,7 +18,7 @@ const updatesRoutes = require("./routers/updatesRoutes");
 const mailRoutes = require("./routers/mailRoutes");
 
 // test-GET route
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   res.send("5PinBowling Node.js Server is Running!");
 });
 
@@ -30,11 +29,10 @@ app.use("/api/v1/businessHours", businessHoursRoutes);
 app.use("/api/v1/updates", updatesRoutes);
 app.use("/api/v1/mail", mailRoutes);
 
-
 // Connect to database and start server
 const startServer = async () => {
   try {
-        await connectDB(process.env.DB_URI);
+    await connectDB(process.env.DB_URI);
 
     app.listen(PORT, () => {
       console.log(`Server listening on port ${PORT}`);
