@@ -26,7 +26,7 @@ const packageController = {
         Package.countDocuments(),
       ]);
 
-      console.info(`Fetched ${packages.length} packages (page ${page})`);
+      // console.info(`Fetched ${packages.length} packages (page ${page})`);
 
       res.status(200).json({
         currentPage: page,
@@ -87,7 +87,9 @@ const packageController = {
         return res.status(404).json({ error: "Package not found" });
       }
       console.info("Package deleted | ID:", id);
-      res.status(200).json({ message: "Package deleted successfully", package: pkg });
+      res
+        .status(200)
+        .json({ message: "Package deleted successfully", package: pkg });
     } catch (error) {
       console.error("Error deleting package:", error.message);
       res.status(500).json({ error: "Internal Server Error" });

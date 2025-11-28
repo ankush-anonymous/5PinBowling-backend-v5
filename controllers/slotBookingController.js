@@ -17,23 +17,23 @@ const bookingController = {
   // ✅ Get All with Pagination
   getAllBookings: async (req, res) => {
     try {
-      const page = parseInt(req.query.page) || 1;
-      const limit = parseInt(req.query.limit) || 10;
-      const skip = (page - 1) * limit;
+      const bookings = await Booking.find().populate("package_id").sort({ date: 1 });
 
-      const [bookings, totalBookings] = await Promise.all([
-        Booking.find().skip(skip).limit(limit).populate("package_id"),
-        Booking.countDocuments(),
-      ]);
+      const groupedByDate = bookings.reduce((acc, booking) => {
+        const date = booking.date.toISOString().split("T")[0]; // Get YYYY-MM-DD
+        if (!acc[date]) {
+          acc[date] = {
+            date: date,
+            bookings_details: [],
+          };
+        }
+        acc[date].bookings_details.push(booking);
+        return acc;
+      }, {});
 
-      console.info(`Fetched ${bookings.length} bookings (page ${page})`);
+      const response = Object.values(groupedByDate);
 
-      res.status(200).json({
-        currentPage: page,
-        totalPages: Math.ceil(totalBookings / limit),
-        totalBookings,
-        data: bookings,
-      });
+      res.status(200).json({ data: response });
     } catch (error) {
       console.error("Error fetching bookings:", error.message);
       res.status(500).json({ error: "Internal Server Error" });
@@ -88,7 +88,9 @@ const bookingController = {
         return res.status(404).json({ error: "Booking not found" });
       }
       console.info("Booking deleted | ID:", id);
-      res.status(200).json({ message: "Booking deleted successfully", booking });
+      res
+        .status(200)
+        .json({ message: "Booking deleted successfully", booking });
     } catch (error) {
       console.error("Error deleting booking:", error.message);
       res.status(500).json({ error: "Internal Server Error" });

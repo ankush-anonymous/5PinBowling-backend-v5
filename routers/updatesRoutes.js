@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const updatesController = require("../controllers/updatesController");
+const verifyToken = require("../middleware/JWTverifyToken");
+
+router.use(verifyToken);
 
 router.post("/createUpdate", updatesController.createUpdate);
 router.get("/getAllUpdates", updatesController.getAllUpdates);

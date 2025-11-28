@@ -18,7 +18,7 @@ const businessHoursController = {
   getAllBusinessHours: async (req, res) => {
     try {
       const hours = await BusinessHour.find();
-      console.info(`Fetched ${hours.length} business hours`);
+      // console.info(`Fetched ${hours.length} business hours`);
       res.status(200).json({ data: hours });
     } catch (error) {
       console.error("Error fetching business hours:", error.message);

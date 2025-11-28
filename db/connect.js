@@ -10,6 +10,13 @@ const connectDB = async (url) => {
   }
 
   try {
+    // Log masked host(s) to help diagnose environment issues without leaking secrets
+    try {
+      const masked = url.replace(/\/\/([^:@]+)(:([^@]*))?@/, '//****:****@');
+      const hostPart = masked.split('@').pop()?.split('/')[0];
+      if (hostPart) console.log(`Connecting to MongoDB at ${hostPart} ...`);
+    } catch {}
+
     // With Mongoose v6+, no need for useNewUrlParser/useUnifiedTopology
     await mongoose.connect(url);
     console.log("MongoDB connected successfully");
