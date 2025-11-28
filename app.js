@@ -31,4 +31,18 @@ app.use("/api/v1/updates", updatesRoutes);
 app.use("/api/v1/mail", mailRoutes);
 app.use("/api/v1/user", userRoutes);
 
-module.exports = app;
+// Connect to database and start server
+const startServer = async () => {
+  try {
+    await connectDB(process.env.DB_URI);
+
+    app.listen(PORT, () => {
+      console.log(`Server listening on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Failed to start server:", error);
+    process.exit(1);
+  }
+};
+
+startServer();
